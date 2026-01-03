@@ -44,34 +44,34 @@
     <p>ground = Entity(model='plane', scale=(500,500,500), color=color.gray, collider='box')</p>
     <p>player_controller=FirstPersonController()</p>
     <p>app.run()</p>
-elif code=="input=draw(cube tree)+[assign_player+view=first person]+{controls=w,s,a,d}":
-    app=Ursina()
-    Sky()
-    tree_top=Entity(model='cube',color=color.green,scale=(2,4,2),position=(1,3,1))
-    trunk=Entity(model='cube',color=color.brown,scale=(1,3,1),position=(1,1,1))
-    ground = Entity(model='plane', scale=(500,500,500), color=color.gray, collider='box')
-    player_controller=FirstPersonController()
-    app.run()
-#houses
-elif code=="input=draw(house)+[assign_player+view=first person]+{controls=w,s,a,d}":
-    app=Ursina()
-    Sky()
-    house_body=Entity(model='cube',color=color.yellow,scale=(4,3,4),position=(-2,1,1))
-    roof=Entity(model='plane',color=color.red,scale=(4.5,2,4.5),position=(-2,4,1))
-    door=Entity(model='cube',color=color.brown,scale=(1,2,0.1),position=(-2,0.5,3))
-    ground = Entity(model='plane', scale=(500,500,500), color=color.gray, collider='box')
-    player_controller=FirstPersonController()
-    app.run()
-elif code=="input=draw(chair)+[assign_player+view=first person]+{controls=w,s,a,d}":
-    app=Ursina()
-    Sky()
-    chair_seat=Entity(model='cube',color=color.brown,scale=(1.5,0.2,1.5),position=(0,0.5,0))
-    chair_back=Entity(model='cube',color=color.brown,scale=(1.5,1.5,0.2),position=(0,1.25,-0.25))
-    chair_leg1=Entity(model='cube',color=color.brown,scale=(0.2,0.5,0.2),position=(-0.75,0.25,-0.25))
-    chair_leg2=Entity(model='cube',color=color.brown,scale=(0.2,0.5,0.2),position=(0.75,0.25,-0.25))
-    chair_leg3=Entity(model='cube',color=color.brown,scale=(0.2,0.5,0.2),position=(-0.75,0.25,0.75))
-    chair_leg4=Entity(model='cube',color=color.brown,scale=(0.2,0.5,0.2),position=(0.75,0.25,0.75))
-    ground = Entity(model='plane', scale=(500,500,500), color=color.gray, collider='box')
+<p>elif code=="input=draw(cube tree)+[assign_player+view=first person]+{controls=w,s,a,d}":</p>
+    <p>app=Ursina()</p>
+    <p>Sky()</p>
+    <p>tree_top=Entity(model='cube',color=color.green,scale=(2,4,2),position=(1,3,1))</p>
+    <p>trunk=Entity(model='cube',color=color.brown,scale=(1,3,1),position=(1,1,1))</p>
+    <p>ground = Entity(model='plane', scale=(500,500,500), color=color.gray, collider='box')</p>
+    <p>player_controller=FirstPersonController()</p>
+    <p>app.run()</p>
+<p>#houses</p>
+<p>elif code=="input=draw(house)+[assign_player+view=first person]+{controls=w,s,a,d}":</p>
+    <p>app=Ursina()
+    <p>Sky()
+    <p>house_body=Entity(model='cube',color=color.yellow,scale=(4,3,4),position=(-2,1,1))
+    <p>roof=Entity(model='plane',color=color.red,scale=(4.5,2,4.5),position=(-2,4,1))
+    <p>door=Entity(model='cube',color=color.brown,scale=(1,2,0.1),position=(-2,0.5,3))
+    <p>ground = Entity(model='plane', scale=(500,500,500), color=color.gray, collider='box')
+    <p>player_controller=FirstPersonController()
+    <p>app.run()
+<p>elif code=="input=draw(chair)+[assign_player+view=first person]+{controls=w,s,a,d}":
+    <p>app=Ursina()
+    <p>Sky()
+    <p>chair_seat=Entity(model='cube',color=color.brown,scale=(1.5,0.2,1.5),position=(0,0.5,0))
+    <p>chair_back=Entity(model='cube',color=color.brown,scale=(1.5,1.5,0.2),position=(0,1.25,-0.25))
+    <p>chair_leg1=Entity(model='cube',color=color.brown,scale=(0.2,0.5,0.2),position=(-0.75,0.25,-0.25))
+    <p>chair_leg2=Entity(model='cube',color=color.brown,scale=(0.2,0.5,0.2),position=(0.75,0.25,-0.25))
+    <p>chair_leg3=Entity(model='cube',color=color.brown,scale=(0.2,0.5,0.2),position=(-0.75,0.25,0.75))
+    <p>chair_leg4=Entity(model='cube',color=color.brown,scale=(0.2,0.5,0.2),position=(0.75,0.25,0.75))
+    <p>ground = Entity(model='plane', scale=(500,500,500), color=color.gray, collider='box')
     player_controller=FirstPersonController()
     app.run()
 elif code=="input=draw(chair.color=blue)+[assign_player+view=first person]+{controls=w,s,a,d}":
@@ -323,4 +323,5 @@ else:
     <p>else:</p>
         <p>print("Invalid response.")</p>
 </body>
+
 </html>
