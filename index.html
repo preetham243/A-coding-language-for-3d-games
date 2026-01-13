@@ -60,6 +60,126 @@
     <h1>Happy coding!</h1>
     <h2>Code:</h2>
     <pre><code>
+        
+from ursina import *
+from ursina.prefabs.first_person_controller import FirstPersonController
+
+app = Ursina()
+Sky()
+Entity(model='plane', scale=(100,1,100), color=color.gray, collider='box')
+player = FirstPersonController()
+
+
+def spawn_tree():
+    Entity(model='sphere', color=color.green, scale=(3,3,3), position=(0,3,5))
+    Entity(model='cube', color=color.brown, scale=(1,3,1), position=(0,1,5))
+
+def spawn_house():
+    Entity(model='cube', color=color.yellow, scale=(4,4,4), position=(5,2,5))
+    Entity(model='cube', color=color.brown, scale=(1,2,0.1), position=(5,1,7.05))
+
+def spawn_player():
+    player=FirstPersonController()
+
+def spawn_glitch():
+    Entity(model='sphere', color=color.green, scale=(54,56,763), position=(433,543,655))
+    Entity(model='cube', color=color.brown, scale=(1,3,1), position=(4556,5642,1))
+    Entity(model='cube', color=color.yellow, scale=(4,4,4), position=(5,2,5))
+    Entity(model='cube', color=color.brown, scale=(6,2,0.7), position=(6,1,7.080))
+
+def OLD_mob():
+    global OLD_mob_entity
+    OLD_mob_entity = Entity(model='cube', color=color.brown, scale=(1,2,1), position=(0,1,0))
+    mob_eyes = Entity(model='sphere', color=color.black, scale=(0.2,0.2,0.2), position=(0.2, 0.3, 0.5), parent=OLD_mob_entity)   
+    mob_eyes2 = Entity(model='sphere', color=color.black, scale=(0.2,0.2,0.2), position=(-0.2, 0.3, 0.5), parent=OLD_mob_entity)
+def update():
+    global OLD_mob_entity
+    if held_keys['y']:
+        OLD_mob_entity.position += player.forward * time.dt * 1
+    if held_keys['h']:
+        OLD_mob_entity.position -= player.back * time.dt * 1
+    if held_keys['g']:
+        OLD_mob_entity.position -= player.left * time.dt * 1
+    if held_keys['j']:
+        OLD_mob_entity.position += player.right * time.dt * 1
+    if held_keys['o']:
+        OLD_mob_entity.position += player.up * time.dt * 1
+    if held_keys['l']:
+        OLD_mob_entity.position -= player.down * time.dt * 1
+def bird():
+    global bird_entity
+    bird_entity = Entity(model='sphere', color=color.white, scale=(1,1,1), position=(0,5,0))
+    bird_beak = Entity(model='cube', color=color.orange, scale=(0.2,0.5,0.2), position=(0, 0, 0.6), parent=bird_entity)   
+    bird_wing = Entity(model='plane', color=color.gray, scale=(0.5,1,0.1), position=(0.5, 0, 0), rotation=(0,0,45), parent=bird_entity)
+    bird_wing2 = Entity(model='plane', color=color.gray, scale=(0.5,1,0.1), position=(-0.5, 0, 0), rotation=(0,0,-45), parent=bird_entity)
+def update():
+    global bird_entity
+    if held_keys['y']:
+        bird_entity.position += player.forward * time.dt * 1
+    if held_keys['h']:
+        bird_entity.position -= player.back * time.dt * 1
+    if held_keys['g']:
+        bird_entity.position -= player.left * time.dt * 1
+    if held_keys['j']:
+        bird_entity.position += player.right * time.dt * 1
+    if held_keys['o']:
+        bird_entity.position += player.up * time.dt * 1
+    if held_keys['l']:
+        bird_entity.position -= player.down * time.dt * 1
+def spawn_bed():
+    bed_base=Entity(model='cube',color=color.white,scale=(3,0.5,6),position=(0,0.25,0))
+    bed_headboard=Entity(model='cube',color=color.brown,scale=(3,2,0.2),position=(0,1.25,-2.9))
+    bed_pillow=Entity(model='cube',color=color.light_gray,scale=(2,0.5,1),position=(0,0.75,-2))
+
+commands = {
+    "{controls=WASD}": lambda: print("Controls set to WASD"),
+    "[assign_player+view=CLASSIC!]": spawn_player,
+    "[assign_player+view=first person]": spawn_player,
+    "input=draw(tree)": spawn_tree,
+    "input=draw(house)": spawn_house,
+    "(tree)": spawn_tree,
+    "(house)": spawn_house,
+    "import that": lambda: print("ah, the holy grail of python, import this, one commandment says my personal favorite, Now is better than never. and we made a DSL at uniscript, now, instead of never.-preetham, the founder of uniscript."),
+    "input=draw(glitch)": spawn_glitch,
+    "input=draw(glitch))": spawn_glitch,
+    "input=draw(house)": spawn_house,
+    "input=draw(house))": spawn_house,
+    "input=merge(": lambda: print("Merging inputs..."),
+    "{tree}": spawn_tree,
+    "{house}": spawn_house,
+    "{glitch}": spawn_glitch,
+    "input=draw.spawn(mob.type=human)": OLD_mob,
+    "input=draw.spawn(mob.type=human))": OLD_mob,
+    "input=draw.spawn(mob.type=bird)": bird,
+    "input=draw.spawn(mob.type=bird))": bird,
+    "{bird}": bird,
+    "{mob}": OLD_mob,
+    "input=draw(bed)": spawn_bed,
+}
+
+
+def input_handler():
+    print("Welcome to Uniscript!")
+    user_input = input(":")
+    parts = user_input.split("+")
+    
+    for part in parts:
+        clean_part = part.strip()
+        if clean_part in commands:
+            commands[clean_part]()
+        else:
+            print(f"WARNING: Unknown command: '{clean_part}'")
+            print("Would you like to switch to default (yes/no)")
+            response= input(":").strip().lower()
+            if response == "yes":
+                print("Switched to default settings...")
+                spawn_tree()
+            else:
+                print("No changes made.")
+
+input_handler()
+
+app.run()
     </code></pre>
     <p>© 2026 Uniscript contributors. Released under the MIT License.</p>
 </body>
