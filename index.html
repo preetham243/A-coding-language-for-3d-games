@@ -13,7 +13,7 @@
     <h1>Welcome to uniscript's official website!</h1>
     <h4>Uniscript is a DSL scripting language designed for making games and programs easy and fun. Uniscript was coded in python. it was named after the universe, because you can code a game or "universe" in it.</h4>
     <h2>Why choose Uniscript?</h2>
-    <p>Uniscript was designed to make coding easy, simple, and fun. to make kids to learn text code as easy, and not "hard." our mission is to promote schools across the US to use text code, like us!</p>
+    <p>Uniscript was designed to make coding easy, simple, and fun. to make kids to learn text code as easy, and not "hard." to make coding games to so hard. our mission is to promote schools across the US to use text code(like us) and to make game making simple</p>
     <h1>Features of Uniscript:</h1>
     <p>-Easy to learn syntax</p>
     <p>-Built-in 3D game engine(ursina)</p>
@@ -59,13 +59,14 @@
     <h1>Happy coding!</h1>
     <h2>Code:</h2>
     <pre><code>
-        
+        # RENEMBER THAT INTERPRETERS HAVE BEEN INHANCED WITH AI
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
-
+import random
+import math
 app = Ursina()
 Sky()
-Entity(model='plane', scale=(100,1,100), color=color.gray, collider='box')
+GROUND=Entity(model='plane', scale=(100,1,100), color=color.gray, collider='box')
 player = FirstPersonController()
 
 
@@ -85,51 +86,55 @@ def spawn_glitch():
     Entity(model='cube', color=color.brown, scale=(1,3,1), position=(4556,5642,1))
     Entity(model='cube', color=color.yellow, scale=(4,4,4), position=(5,2,5))
     Entity(model='cube', color=color.brown, scale=(6,2,0.7), position=(6,1,7.080))
-
-def OLD_mob():
-    global OLD_mob_entity
-    OLD_mob_entity = Entity(model='cube', color=color.brown, scale=(1,2,1), position=(0,1,0))
-    mob_eyes = Entity(model='sphere', color=color.black, scale=(0.2,0.2,0.2), position=(0.2, 0.3, 0.5), parent=OLD_mob_entity)   
-    mob_eyes2 = Entity(model='sphere', color=color.black, scale=(0.2,0.2,0.2), position=(-0.2, 0.3, 0.5), parent=OLD_mob_entity)
+# human_entity=None
+# def OLD_mob():
+#     global human_entity
+#     human_entity = Entity(model='cube', color=color.azure, scale=(1, 1.5, .5), position=(0, 1.5, 10))
+#     Entity(model='cube', color=color.peach, scale=(.6, .6, .6), position=(0, .6, 0), parent=human_entity, Collider='box')
+#     Entity(model='cube', color=color.azure, scale=(.3, 1, .3), position=(.7, 0, 0), parent=human_entity, Collider='box')
+#     Entity(model='cube', color=color.azure, scale=(.3, 1, .3), position=(-.7, 0, 0), parent=human_entity, Collider='box')
+#     Entity(model='cube', color=color.blue, scale=(.4, 1, .4), position=(.3, -1, 0), parent=human_entity, Collider='box')
+#     Entity(model='cube', color=color.blue, scale=(.4, 1, .4), position=(-.3, -1, 0), parent=human_entity, Collider='box')
+bird_entity=None
+Human_time=0
+Bird_time=0
 def update():
-    global OLD_mob_entity
-    if held_keys['y']:
-        OLD_mob_entity.position += player.forward * time.dt * 1
-    if held_keys['h']:
-        OLD_mob_entity.position -= player.back * time.dt * 1
-    if held_keys['g']:
-        OLD_mob_entity.position -= player.left * time.dt * 1
-    if held_keys['j']:
-        OLD_mob_entity.position += player.right * time.dt * 1
-    if held_keys['o']:
-        OLD_mob_entity.position += player.up * time.dt * 1
-    if held_keys['l']:
-        OLD_mob_entity.position -= player.down * time.dt * 1
-def bird():
-    global bird_entity
-    bird_entity = Entity(model='sphere', color=color.white, scale=(1,1,1), position=(0,5,0))
-    bird_beak = Entity(model='cube', color=color.orange, scale=(0.2,0.5,0.2), position=(0, 0, 0.6), parent=bird_entity)   
-    bird_wing = Entity(model='plane', color=color.gray, scale=(0.5,1,0.1), position=(0.5, 0, 0), rotation=(0,0,45), parent=bird_entity)
-    bird_wing2 = Entity(model='plane', color=color.gray, scale=(0.5,1,0.1), position=(-0.5, 0, 0), rotation=(0,0,-45), parent=bird_entity)
-def update():
-    global bird_entity
-    if held_keys['y']:
-        bird_entity.position += player.forward * time.dt * 1
-    if held_keys['h']:
-        bird_entity.position -= player.back * time.dt * 1
-    if held_keys['g']:
-        bird_entity.position -= player.left * time.dt * 1
-    if held_keys['j']:
-        bird_entity.position += player.right * time.dt * 1
-    if held_keys['o']:
-        bird_entity.position += player.up * time.dt * 1
-    if held_keys['l']:
-        bird_entity.position -= player.down * time.dt * 1
+    global human_entity, Human_time, bird_entity, Bird_time
+    hit_info = None 
+    if bird_entity:
+     hit_info = raycast(bird_entity.world_position, (0,-1,0), distance=0.5, ignore=(bird_entity,))
+    if hit_info and hit_info.hit:
+            on_ground = True
+            bird_entity.y = hit_info.world_point.y + 0.5 
+            Bird_time = 0
+    else:
+            on_ground = False
+    if not on_ground:
+     if Bird_time > 1 and Bird_time < 20:
+        bird_entity.position += bird_entity.forward * time.dt * 3
+     if Bird_time > 20 and Bird_time < 23:
+        bird_entity.rotation_y += time.dt * 30
+    Bird_time += time.dt
+    if Bird_time > 23 and Bird_time < 26:
+            bird_entity.position += bird_entity.forward * time.dt * 3
+    if Bird_time > 40 and Bird_time < 42:
+            bird_entity.position += bird_entity.up * time.dt * 3
+    if Bird_time > 42 and Bird_time < 45:
+            bird_entity.rotation_y += time.dt * 30
+    if Bird_time > 45 and Bird_time < 50:
+            bird_entity.position += bird_entity.down * time.dt * 10
+            Bird_time = 0
+            on_ground = False
+def spawn_bird():
+  global bird_entity
+  bird_entity = Entity(model='cube', color=color.white, scale=(1,1,1), position=(0,5,0), collider='box')
+  bird_beak = Entity(model='cube', color=color.orange, scale=(0.2,0.5,0.2), position=(0, 0, 0.6), rotation=(90,0,0), parent=bird_entity, collider='box')
+  bird_wing = Entity(model='plane', color=color.gray, scale=(0.5,1,0.1), position=(0.5, 0, 0), rotation=(0,0,45), parent=bird_entity, collider='box')
+  bird_wing2 = Entity(model='plane', color=color.gray, scale=(0.5,1,0.1), position=(-0.5, 0, 0), rotation=(0,0,-45), parent=bird_entity, collider='box')
 def spawn_bed():
     bed_base=Entity(model='cube',color=color.white,scale=(3,0.5,6),position=(0,0.25,0))
     bed_headboard=Entity(model='cube',color=color.brown,scale=(3,2,0.2),position=(0,1.25,-2.9))
     bed_pillow=Entity(model='cube',color=color.light_gray,scale=(2,0.5,1),position=(0,0.75,-2))
-
 commands = {
     "{controls=WASD}": lambda: print("Controls set to WASD"),
     "[assign_player+view=CLASSIC!]": spawn_player,
@@ -147,16 +152,17 @@ commands = {
     "{tree}": spawn_tree,
     "{house}": spawn_house,
     "{glitch}": spawn_glitch,
-    "input=draw.spawn(mob.type=human)": OLD_mob,
-    "input=draw.spawn(mob.type=human))": OLD_mob,
-    "input=draw.spawn(mob.type=bird)": bird,
-    "input=draw.spawn(mob.type=bird))": bird,
-    "{bird}": bird,
-    "{mob}": OLD_mob,
+    #The following commands are commented out as the OLD_mob function is currently disabled.
+    # "input=draw.spawn(mob.type=human)": OLD_mob,
+    # "input=draw.spawn(mob.type=human))": OLD_mob,
+    # "{mob}": OLD_mob,
     "input=draw(bed)": spawn_bed,
+    "input=draw(bed))": spawn_bed,
+    "{bed}": spawn_bed,
+    # "input=draw.spawn(mob.type=human.shirt=pink)": OLD_mob,
+    "input=draw(bird)": spawn_bird
+
 }
-
-
 def input_handler():
     print("Welcome to Uniscript!")
     user_input = input(":")
@@ -180,7 +186,6 @@ input_handler()
 
 app.run()
     </code></pre>
-    <h3>#Fun fact: this is Uniscript version 2.0!</h3>
     <h5>© 2026 Uniscript contributors. Released under the MIT License.</h5>
 </body>
 </html>
