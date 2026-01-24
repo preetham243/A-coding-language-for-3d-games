@@ -55,11 +55,15 @@
     <h3>3rd link</h3>
     <a href="https://www.youtube.com/watch?v=q_DgrfA3z6k" target="_blank" rel="noopener">
     Want a tutorial on uniscript? click me!
-    </a> 
+    </a>
+    <h3>4th link</h3>
+        <a href="https://tally.so/r/gD9NDl" target="_blank" rel="noopener">
+            Want to publish a game? click me  for a form to publish your first game!
+        </a>
     <h1>Happy coding!</h1>
     <h2>Code:</h2>
     <pre><code>
-        # RENEMBER THAT INTERPRETERS HAVE BEEN INHANCED WITH AI
+       # RENEMBER THAT INTERPRETERS HAVE BEEN INHANCED WITH AI
 from ursina import *
 from ursina.prefabs.first_person_controller import FirstPersonController
 import random
@@ -86,15 +90,15 @@ def spawn_glitch():
     Entity(model='cube', color=color.brown, scale=(1,3,1), position=(4556,5642,1))
     Entity(model='cube', color=color.yellow, scale=(4,4,4), position=(5,2,5))
     Entity(model='cube', color=color.brown, scale=(6,2,0.7), position=(6,1,7.080))
-# human_entity=None
-# def OLD_mob():
-#     global human_entity
-#     human_entity = Entity(model='cube', color=color.azure, scale=(1, 1.5, .5), position=(0, 1.5, 10))
-#     Entity(model='cube', color=color.peach, scale=(.6, .6, .6), position=(0, .6, 0), parent=human_entity, Collider='box')
-#     Entity(model='cube', color=color.azure, scale=(.3, 1, .3), position=(.7, 0, 0), parent=human_entity, Collider='box')
-#     Entity(model='cube', color=color.azure, scale=(.3, 1, .3), position=(-.7, 0, 0), parent=human_entity, Collider='box')
-#     Entity(model='cube', color=color.blue, scale=(.4, 1, .4), position=(.3, -1, 0), parent=human_entity, Collider='box')
-#     Entity(model='cube', color=color.blue, scale=(.4, 1, .4), position=(-.3, -1, 0), parent=human_entity, Collider='box')
+human_entity=None
+def OLD_mob():
+    global human_entity
+    human_entity = Entity(model='cube', color=color.azure, scale=(1, 1.5, .5), position=(0, 1.5, 10))
+    Entity(model='cube', color=color.peach, scale=(.6, .6, .6), position=(0, .6, 0), parent=human_entity, Collider='box')
+    Entity(model='cube', color=color.azure, scale=(.3, 1, .3), position=(.7, 0, 0), parent=human_entity, Collider='box')
+    Entity(model='cube', color=color.azure, scale=(.3, 1, .3), position=(-.7, 0, 0), parent=human_entity, Collider='box')
+    Entity(model='cube', color=color.blue, scale=(.4, 1, .4), position=(.3, -1, 0), parent=human_entity, Collider='box')
+    Entity(model='cube', color=color.blue, scale=(.4, 1, .4), position=(-.3, -1, 0), parent=human_entity, Collider='box')
 bird_entity=None
 Human_time=0
 Bird_time=0
@@ -125,6 +129,14 @@ def update():
             bird_entity.position += bird_entity.down * time.dt * 10
             Bird_time = 0
             on_ground = False
+    if human_entity:
+      if Human_time > 2 and Human_time < 4:
+        human_entity.position += human_entity.forward * time.dt * 2
+        Human_time += time.dt
+      if  Human_time > 4 and Human_time < 6:
+        human_entity.rotation_y += time.dt * 20
+      if Human_time > 6:
+        Human_time = 0
 def spawn_bird():
   global bird_entity
   bird_entity = Entity(model='cube', color=color.white, scale=(1,1,1), position=(0,5,0), collider='box')
@@ -152,14 +164,12 @@ commands = {
     "{tree}": spawn_tree,
     "{house}": spawn_house,
     "{glitch}": spawn_glitch,
-    #The following commands are commented out as the OLD_mob function is currently disabled.
-    # "input=draw.spawn(mob.type=human)": OLD_mob,
-    # "input=draw.spawn(mob.type=human))": OLD_mob,
-    # "{mob}": OLD_mob,
+    "input=draw.spawn(mob.type=human)": OLD_mob,
+    "input=draw.spawn(mob.type=human))": OLD_mob,
+    "{mob}": OLD_mob,
     "input=draw(bed)": spawn_bed,
     "input=draw(bed))": spawn_bed,
     "{bed}": spawn_bed,
-    # "input=draw.spawn(mob.type=human.shirt=pink)": OLD_mob,
     "input=draw(bird)": spawn_bird
 
 }
@@ -185,7 +195,6 @@ def input_handler():
 input_handler()
 
 app.run()
-    </code></pre>
     <h5>© 2026 Uniscript contributors. Released under the MIT License.</h5>
 </body>
 </html>
